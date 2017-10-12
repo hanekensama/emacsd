@@ -23,6 +23,7 @@
     (package-install pkg)))
 
 (auto-install 'use-package)
+(auto-install 'diminish)
 (require 'use-package)
 
 (auto-install 'init-loader)

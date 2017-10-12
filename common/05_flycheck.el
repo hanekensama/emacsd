@@ -1,5 +1,5 @@
 (auto-install 'flycheck)
-(auto-install 'flycheck-pos-tip-mode)
+(auto-install 'flycheck-pos-tip)
 
 (use-package flycheck
   :diminish flycheck-mode
@@ -10,5 +10,4 @@
   (define-key flycheck-mode-map (kbd "C-M-n") 'flycheck-next-error)
   (define-key flycheck-mode-map (kbd "C-M-p") 'flycheck-previous-error)
   (add-hook 'c-mode-common-hook 'flycheck-mode)
-  (add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++14")))
-  )
+  (add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++14"))))

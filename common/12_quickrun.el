@@ -1,3 +1,3 @@
 (auto-install 'quickrun)
-(use-package quickru
-  :defer t))
+(use-package quickrun
+  :defer t)
