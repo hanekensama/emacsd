@@ -32,7 +32,3 @@
 (if (not window-system)
     (init-loader-load "~/.emacs.d/cui")
   (init-loader-load "~/.emacs.d/gui"))
-
-(defun show-help()
-  (interactive)
-  (switch-to-buffer (find-file-read-only "~/.emacs.d/usage.org")))

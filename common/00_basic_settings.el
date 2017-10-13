@@ -22,3 +22,6 @@
 (global-linum-mode t)                           ; 行数を表示(遅くなる。)
 (setq linum-format "%4d ") 
 
+(defun show-help()
+  (interactive)
+  (switch-to-buffer (find-file-read-only "~/.emacs.d/readme.org")))
