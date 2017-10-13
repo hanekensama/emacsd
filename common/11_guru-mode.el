@@ -1,2 +1,2 @@
-(use-package guru-global-mode
-  :ensure t)
+;(use-package guru-global-mode
+;  :ensure t)

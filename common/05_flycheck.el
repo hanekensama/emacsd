@@ -1,10 +1,10 @@
 (use-package flycheck
-  :ensure t
+  :defer t
   :diminish flycheck-mode
   :init
   (global-flycheck-mode t)
-  (use-package flychack-pos-tip
-    :ensure t)
+  (use-package flycheck-pos-tip
+    :defer t)
   :config
   (flycheck-pos-tip-mode)
   (define-key flycheck-mode-map (kbd "C-M-n") 'flycheck-next-error)

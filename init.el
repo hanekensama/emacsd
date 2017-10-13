@@ -13,9 +13,7 @@
 ;; Install packages automatically
 (require 'package)
 (setq package-archives
-      '(;("gnu" . "http://elpa.gnu.org/packages/")
-        ("melpa" . "http://melpa.org/packages/")))
-        ;("org" . "http://orgmode.org/elpa/")))
+      '(("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 
 (when (not (package-installed-p 'use-package))
