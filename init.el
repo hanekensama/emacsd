@@ -17,10 +17,13 @@
         ("melpa" . "http://melpa.org/packages/")
         ("org" . "http://orgmode.org/elpa/")))
 (package-initialize)
-(package-refresh-contents)
 
+(setq package-refreshed 0)
 (defun auto-install (pkg) 
   (unless (package-installed-p pkg)
+    (unless (package-refreshed 1)
+      (package-refresh-contents)
+      (setq package-refreshed 1))
     (package-install pkg)))
 
 (auto-install 'use-package)
@@ -36,9 +39,3 @@
 (if (not window-system)
     (init-loader-load "~/.emacs.d/cui")
   (init-loader-load "~/.emacs.d/gui"))
-
-;;(use-package auto-compile :no-require t :defer t :ensure t
-;;  :diminish "C"
-;;  :init
-;;  (add-hook 'emacs-lisp-mode-hook 'auto-compile-mode))
-;;; init.el ends here
