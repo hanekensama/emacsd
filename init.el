@@ -17,6 +17,7 @@
         ("melpa" . "http://melpa.org/packages/")
         ("org" . "http://orgmode.org/elpa/")))
 (package-initialize)
+(package-refresh-contents)
 
 (defun auto-install (pkg) 
   (unless (package-installed-p pkg)
