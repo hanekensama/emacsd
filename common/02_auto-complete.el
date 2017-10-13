@@ -1,7 +1,5 @@
-(auto-install 'auto-complete)
-
 (use-package auto-complete
-  :defer t
+  :ensure t
   :diminish auto-complete-mode
   :config
   (add-to-list 'ac-dictionary-directories (locate-user-emacs-file "./ac-dict"))

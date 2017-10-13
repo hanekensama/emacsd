@@ -1,6 +1,5 @@
-(auto-install 'expand-region)
-
 (use-package expand-region
+  :ensure t
   :defer t
   :init
   (bind-key "C-." 'er/expand-region)

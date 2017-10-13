@@ -1,7 +1,5 @@
-(auto-install 'magit)
-(auto-install 'git-gutter-fringe+)
-
 (use-package magit
+  :ensure t
   :defer t
   :config
   (setq-default magit-auto-revert-mode nil)
@@ -9,5 +7,6 @@
   :bind
   (("C-x g" . magit-status)))
 
-(use-package git-gutter-fringe+)
+(use-package git-gutter-fringe+
+  :ensure t)
 

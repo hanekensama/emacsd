@@ -1,2 +1,2 @@
-(auto-install 'guru-mode)
-(guru-global-mode)
+(use-package guru-global-mode
+  :ensure t)

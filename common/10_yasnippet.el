@@ -1,6 +1,5 @@
-(auto-install 'yasnippet)
-
 (use-package yasnippet
+  :ensure t
   :diminish yas-minor-mode
   :init
   (custom-set-variables

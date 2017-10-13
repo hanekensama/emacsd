@@ -1,5 +1,5 @@
-(auto-install 'mozc)
 (use-package mozc
+  :ensure t
   :defer t
   :config
   (set-language-environment "Japanese")

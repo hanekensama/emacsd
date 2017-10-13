@@ -1,5 +1,3 @@
-(auto-install 'open-junk-file)
-
 (use-package org
   :ensure t
   :mode (("\\.org$" . org-mode))
@@ -32,6 +30,7 @@
            :empty-lines 1))))
 
 (use-package open-junk-file
+  :ensure t
   :config
   (setq open-junk-file-format "~/Documents/org/junk/%Y-%m%d-%H%M%S.org")
   :bind

@@ -1,9 +1,8 @@
-(auto-install 'multiple-cursors)
-(auto-install 'smartrep)
-
 (use-package multiple-cursors
+  :ensure t
   :init
-  (require 'smartrep)
+  (use-package smartrep
+    :ensure t)
   (declare-function smartrep-define-key "smartrep")
   (bind-key "C-M-c" 'mc/edit-lines)
   (bind-key "C-M-r" 'mc/mark-all-in-region)

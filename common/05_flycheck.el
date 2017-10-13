@@ -1,10 +1,10 @@
-(auto-install 'flycheck)
-(auto-install 'flycheck-pos-tip)
-
 (use-package flycheck
+  :ensure t
   :diminish flycheck-mode
   :init
   (global-flycheck-mode t)
+  (use-package flychack-pos-tip
+    :ensure t)
   :config
   (flycheck-pos-tip-mode)
   (define-key flycheck-mode-map (kbd "C-M-n") 'flycheck-next-error)
