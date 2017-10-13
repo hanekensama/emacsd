@@ -1,5 +1,4 @@
 (use-package org
-  :ensure t
   :mode (("\\.org$" . org-mode))
   :bind
   (("C-c c" . org-capture)
@@ -11,7 +10,11 @@
   (setq my-org-agenda-directory "~/Documents/org/todo/")
   (setq org-agenda-files (list my-org-directory my-org-agenda-directory))
   :config
+  (use-package org-table-sticky-header
+    :config
+    (add-hook 'org-mode-hook 'org-table-sticky-header-mode))
   (setq org-hide-leading-stars t)
+  (setq org-startup-indented t)
   (setq org-return-follows-link t)
   (setq org-directory my-org-directory)
   (setq org-default-notes-file "captured.org")

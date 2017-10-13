@@ -17,7 +17,6 @@
 (setq use-dialog-box nil)
 
 (setq-default tab-width 2 indent-tabs-mode nil) ; タブ幅は2, インデントはスペース
-(setq-default show-trailing-whitespace t)       ; 無駄な空白を表示
 (show-paren-mode t)                             ; 対応するカッコを表示
 (setq show-paren-style 'mixed) 
 (global-linum-mode t)                           ; 行数を表示(遅くなる。)
