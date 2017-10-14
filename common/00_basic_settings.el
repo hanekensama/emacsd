@@ -20,7 +20,9 @@
 (show-paren-mode t)                             ; 対応するカッコを表示
 (setq show-paren-style 'mixed) 
 (global-linum-mode t)                           ; 行数を表示(遅くなる。)
-(setq linum-format "%4d ") 
+(setq linum-format "%4d ")
+
+(bind-key* "C-c c" 'compile)
 
 (defun show-help()
   (interactive)
