@@ -1,9 +1,11 @@
 (use-package flycheck
+  :ensure t
   :defer t
   :diminish flycheck-mode
   :init
   (global-flycheck-mode t)
   (use-package flycheck-pos-tip
+    :ensure t
     :defer t)
   
   :bind

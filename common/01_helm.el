@@ -1,10 +1,9 @@
 (use-package helm
-  :defer t
+  :ensure t
   :diminish helm-mode
   :init
-  (use-package helm-config
-    :defer t)
   (use-package helm-smex
+    :ensure t
     :defer t)
   (bind-key "C-x C-f" 'helm-find-files)
   (bind-key "M-x" 'helm-smex)
@@ -12,6 +11,7 @@
   (helm-mode t))
 
 (use-package helm-swoop
+  :ensure t
   :defer t
   :init
   (bind-key "C-;" 'helm-swoop)

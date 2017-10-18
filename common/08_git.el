@@ -1,4 +1,5 @@
 (use-package magit
+  :ensure t 
   :defer t
   :config
   (setq-default magit-auto-revert-mode nil)
@@ -7,5 +8,6 @@
   (("C-x g" . magit-status)))
 
 (use-package git-gutter-fringe+
+  :ensure t
   :defer t)
 

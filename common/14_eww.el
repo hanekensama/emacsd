@@ -53,6 +53,7 @@
   (setq-local shr-put-image-function 'shr-put-image-alt))
 
 (use-package eww
+  :ensure t
   :bind
   (("C-c w" . eww-search)
    ("C-c u" . browse-url-with-eww))

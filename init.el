@@ -10,7 +10,6 @@
 ;;; Commentary:
 
 ;;; Code:
-;; Install packages automatically
 (require 'package)
 (setq package-archives
       '(("melpa" . "http://melpa.org/packages/")))
@@ -20,11 +19,13 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'use-package)
-(setq use-pakcage-always-ensure t)
+(eval-when-compile
+  (require 'use-package))
 (use-package diminish)
+(use-package bind-key)
 
 (use-package init-loader
+  :ensure t
   :config
   (setq init-loader-show-log-after-init nil))
 
