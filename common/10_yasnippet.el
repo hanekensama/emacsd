@@ -4,4 +4,9 @@
   :init
   (custom-set-variables
    '(yas-alias-to-yas/prefix-p nil))
-  (yas-global-mode t))
+  (yas-global-mode t)
+  :config
+  (bind-keys :map yas-keymap
+             ("<tab>" . nil)
+             ))
+

@@ -7,11 +7,15 @@
   (use-package flycheck-pos-tip
     :ensure t
     :defer t)
+  (use-package flycheck-irony
+    :ensure t
+    :init
+    (flycheck-irony-setup))
   
   :bind
   ("C-c n" . flycheck-next-error)
   ("C-c p" . flycheck-previous-error)
-  ("C-c d" . flycheck-list-errors)
+  ("C-c l" . flycheck-list-errors)
   
   :config
   (flycheck-pos-tip-mode)
@@ -19,6 +23,6 @@
   (add-hook 'c++-mode-hook
             '(lambda()
                (setq flycheck-gcc-language-standard "c++14")
-             ))  
+               ))
   )
 

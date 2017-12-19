@@ -9,5 +9,6 @@
   :config
     (setq c-default-style "stroustrup")
     (setq c-basic-offset 2)
-    (setq c-auto-newline t) ; {や;などを入力すると自動で改行    
+    (setq c-auto-newline t) ; {や;などを入力すると自動で改行
+    (electric-pair-mode t)
     )
