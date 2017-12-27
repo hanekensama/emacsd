@@ -22,4 +22,5 @@
 
   (add-hook 'yatex-mode-hook '(lambda () (auto-fill-mode -1))) ;; 自動で改行しない
   (add-hook 'yatex-mode-hook 'turn-on-reftex)
+  (setq tab-width 4)
   )

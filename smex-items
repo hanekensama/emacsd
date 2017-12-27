@@ -1,0 +1,18 @@
+
+;; ----- smex-history -----
+(
+ indent-region
+ package-list-packages
+ package-refresh-contents
+ cd
+ mf
+ 5x5
+ arp
+)
+
+;; ----- smex-data -----
+(
+ (package-list-packages . 4)
+ (package-refresh-contents . 1)
+ (indent-region . 1)
+)
