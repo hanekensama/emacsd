@@ -27,3 +27,5 @@
 (defun show-help()
   (interactive)
   (switch-to-buffer (find-file-read-only "~/.emacs.d/readme.org")))
+
+(bind-key "<f5>" 'revert-buffer-no-confirm)
