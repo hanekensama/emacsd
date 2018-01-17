@@ -12,7 +12,8 @@
 ;;; Code:
 (require 'package)
 (setq package-archives
-      '(("melpa" . "http://melpa.org/packages/")
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("melpa" . "http://melpa.org/packages/")
         ("marmalade" . "http://marmalade-repo.org/packages/")
         ("org" . "http://orgmode.org/elpa/")))
 (package-initialize)
