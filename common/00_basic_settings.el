@@ -16,7 +16,8 @@
 (setq delete-auto-save-files t)
 (setq use-dialog-box nil)
 
-(setq-default tab-width 2 indent-tabs-mode nil) ; タブ幅は2, インデントはスペース
+(setq-default tab-width 2 indent-tabs-mode nil) ; タブ幅は2
+(setq-default indent-tabs-mode nil)             ; インデントはスペース
 (show-paren-mode t)                             ; 対応するカッコを表示
 (setq show-paren-style 'mixed) 
 (global-linum-mode t)                           ; 行数を表示(遅くなる。)

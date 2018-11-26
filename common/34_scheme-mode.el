@@ -21,3 +21,4 @@
 
 (define-key global-map
   "\C-cG" 'scheme-other-window)
+
