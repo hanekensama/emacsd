@@ -10,11 +10,15 @@
 ;;; Commentary:
 
 ;;; Code:
+(setq load-path (append
+                 `("~/.emacs.d/private-conf")
+                 load-path))
+(load "proxy-conf" t)
+
 (require 'package)
 (setq package-archives
       '(("gnu" . "http://elpa.gnu.org/packages/")
-        ("melpa" . "http://melpa.org/packages/")
-        ("marmalade" . "http://marmalade-repo.org/packages/")
+        ("melpa" . "http://melpa.milkbox.net/packages/")
         ("org" . "http://orgmode.org/elpa/")))
 (package-initialize)
 
@@ -49,12 +53,15 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(create-lockfiles nil)
  '(custom-enabled-themes (quote (manoj-dark)))
  '(inhibit-startup-screen t)
  '(irony-additional-clang-options (quote ("-std=c++14")))
+ '(lsp-inhibit-message t t)
+ '(lsp-message-project-root-warning t t)
  '(package-selected-packages
    (quote
-    (powerline rust-mode yatex yaml-mode company-irony company undo-tree quickrun yasnippet open-junk-file org-table-sticky-header git-gutter-fringe+ magit multiple-cursors expand-region flycheck-irony flycheck-pos-tip flycheck mozc e2wm maxframe smartrep helm-swoop helm-smex helm init-loader use-package)))
+    (company-lsp lsp-ui lsp-mode c-eldoc company-irony-c-headers powerline rust-mode yatex yaml-mode company-irony company undo-tree quickrun yasnippet open-junk-file org-table-sticky-header git-gutter-fringe+ magit multiple-cursors expand-region flycheck-irony flycheck-pos-tip flycheck mozc e2wm maxframe smartrep helm-swoop helm-smex helm init-loader use-package)))
  '(yas-alias-to-yas/prefix-p nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
