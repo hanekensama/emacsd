@@ -1,0 +1,10 @@
+.mc-lists.el
+.python-environments/
+ac-comphist.dat
+auto-save-list/
+elpa/
+eshell/
+irony/
+projectile-bookmarks.eld
+smex-items
+tramp
