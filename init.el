@@ -26,14 +26,15 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+
 (eval-when-compile
   (require 'use-package))
 (use-package diminish
-  :ensure t
-  )
+  :ensure t)
 (use-package bind-key
-  :ensure t
-  )
+  :ensure t)
+(use-package use-package-ensure-system-package
+  :ensure t)
 
 (use-package init-loader
   :ensure t
