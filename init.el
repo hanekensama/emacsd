@@ -10,63 +10,43 @@
 ;;; Commentary:
 
 ;;; Code:
-(setq load-path (append
-                 `("~/.emacs.d/private-conf")
-                 load-path))
-(load "proxy-conf" t)
 
-(require 'package)
-(setq package-archives
-      '(("gnu" . "http://elpa.gnu.org/packages/")
-        ("melpa" . "http://melpa.milkbox.net/packages/")
-        ("org" . "http://orgmode.org/elpa/")))
-(package-initialize)
+(prog1 "パッケージ周りの設定"
+  (prog1 "パッケージ利用の準備"
+    (custom-set-variables
+     '(package-archives
+       '(("org"   . "https://orgmode.org/elpa/")
+	 ("melpa" . "https://melpa.org/packages/")
+	 ("gnu"   . "https://elpa.gnu.org/packages/"))))
+    (package-initialize))
 
-(when (not (package-installed-p 'use-package))
-  (package-refresh-contents)
-  (package-install 'use-package))
+  (prog1 "leaf.elの設定"
+    (unless (package-installed-p 'leaf)
+      (unless (assoc 'leaf package-archive-contents)
+        (package-refresh-contents))
+      (condition-case err
+          (package-install 'leaf)
+        (error
+         (package-refresh-contents)
+         (package-install 'leaf))))
 
+    (leaf leaf-keywords
+      :ensure t
+      :config (leaf-keywords-init)))
 
-(eval-when-compile
-  (require 'use-package))
-(use-package diminish
-  :ensure t)
-(use-package bind-key
-  :ensure t)
-(use-package use-package-ensure-system-package
-  :ensure t)
-
-(use-package init-loader
-  :ensure t
+  (prog1 "leaf-keywordsの追加設定"
+    (leaf hydra
+      :ensure t)
+    (leaf el-get
+      :ensure t
+      :custom ((el-get-git-shallow-clone . t)))))
+          
+(leaf *他の設定ファイル読み込み
   :config
-  (setq init-loader-show-log-after-init nil))
-
-(init-loader-load "~/.emacs.d/common")
-(if (not window-system)
-    (init-loader-load "~/.emacs.d/cui")
-  (init-loader-load "~/.emacs.d/gui"))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(create-lockfiles nil)
- '(custom-enabled-themes (quote (manoj-dark)))
- '(inhibit-startup-screen t)
- '(irony-additional-clang-options (quote ("-std=c++14")))
- '(lsp-inhibit-message t t)
- '(lsp-message-project-root-warning t t)
- '(package-selected-packages
-   (quote
-    (company-lsp lsp-ui lsp-mode c-eldoc company-irony-c-headers powerline rust-mode yatex yaml-mode company-irony company undo-tree quickrun yasnippet open-junk-file org-table-sticky-header git-gutter-fringe+ magit multiple-cursors expand-region flycheck-irony flycheck-pos-tip flycheck mozc e2wm maxframe smartrep helm-swoop helm-smex helm init-loader use-package)))
- '(yas-alias-to-yas/prefix-p nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+  (leaf init-loader
+    :ensure t
+    :setq
+    (init-loader-show-log-after-init . t))
+  (init-loader-load "./common")
+  (init-loader-load "./conf")
+  (init-loader-load "./private"))
