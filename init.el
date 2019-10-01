@@ -46,7 +46,8 @@
   (leaf init-loader
     :ensure t
     :setq
-    (init-loader-show-log-after-init . t))
+      (init-loader-show-log-after-init . t))
   (init-loader-load "./common")
   (init-loader-load "./conf")
   (init-loader-load "./private"))
+
