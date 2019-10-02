@@ -10,6 +10,8 @@
 ;;; Commentary:
 
 ;;; Code:
+(prog1 "プロキシ設定の読み込み"
+  (load "proxy-conf" t))
 
 (prog1 "パッケージ周りの設定"
   (prog1 "パッケージ利用の準備"
@@ -48,6 +50,5 @@
     :setq
       (init-loader-show-log-after-init . t))
   (init-loader-load "./common")
-  (init-loader-load "./conf")
-  (init-loader-load "./private"))
+  (init-loader-load "./conf"))
 
