@@ -10,8 +10,8 @@
 ;;; Commentary:
 
 ;;; Code:
-(prog1 "プロキシ設定の読み込み"
-  (load "proxy-conf" t))
+(prog1 "proxy設定の読み込み"
+  (load "~/.emacs.d/proxy-conf" t))
 
 (prog1 "パッケージ周りの設定"
   (prog1 "パッケージ利用の準備"
@@ -51,4 +51,3 @@
       (init-loader-show-log-after-init . t))
   (init-loader-load "./common")
   (init-loader-load "./conf"))
-
