@@ -1,9 +1,6 @@
 (leaf *日本語
   :config
   (set-language-environment "Japanese")
-  (prefer-coding-system 'utf-8)
-  (set-default-coding-systems 'utf-8)
-  (set-keyboard-coding-system 'utf-8)
   (leaf mozc
     :ensure t
     :bind*
@@ -17,9 +14,9 @@
   (delete-auto-save-files . t))
 
 (leaf *デフォルトタブ幅
-  :config
-  (setq-default tab-width 4)
-  (setq-default indent-tabs-mode nil))
+  :setq-default
+  (tab-width . 4)
+  (indent-tabs-mode . nil))
 
 (leaf *README表示
   :config
@@ -39,47 +36,31 @@
 
 (leaf helm
   :ensure t
-  :diminish t
+  :delight Helm
   :init
   (leaf helm-smex
     :ensure t
-    :diminish t
     :bind*
     ("M-x" . helm-smex)
     ("M-X" . helm-smex-major-mode-commands))
   (leaf helm-swoop
     :ensure t
-    :diminish t
     :bind*
     ("C-;" . helm-swoop)
     ("M-C-;" . helm-multi-swoop))
+  (leaf swiper-helm
+    :ensure t
+    :bind*
+    ("C-s" . swiper-helm))
   :config
   (helm-mode t)
   :bind*
   ("C-x C-f" . helm-find-files))
 
-(leaf smartrep
-  :ensure t
-  :config
-  (smartrep-define-key global-map "C-x"
-    '(("o" . other-window))))
+(leaf *Window間移動
+  :smartrep*
+  ("C-x"
+   (("o" . other-window))))
 
-(leaf expand-region
-  :ensure t
-  :bind*
-  ("C-." . er/expand-region)
-  ("C-," . ex/contract-region))
-
-
-(leaf multiple-cursors
-  :ensure t
-  :after smartrep
-  :config
-  (declare-function smartrep-define-key "smartrep")
-  (global-unset-key (kbd "C-t"))
-  (smartrep-define-key global-map "C-t"
-    '(("C-t" . 'mc/mark-next-like-this)
-      ("n" . 'mc/mark-next-like-this)
-      ("p" . 'mc/mark-previous-like-this)
-      ("*" . 'mc/mark-all-like-this))))
-
+(leaf bind-key
+  :ensure t)
