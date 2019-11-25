@@ -17,10 +17,11 @@
 (leaf *フォント
   :config
   (leaf *Ricty
-    :if
-    (member "Ricty" (font-family-list))
     :config
-    (set-face-attribute 'default nil :font "Ricty-14")))
+    (if (member "Ricty Diminished" (font-family-list))
+        (set-face-attribute 'default nil :font "Ricty Diminished-14")
+      (if (member "Ricty" (font-family-list))
+          (set-face-attribute 'default nil :fonr "Ricty-14")))))
 
 (leaf *メニューバー、ツールバー非表示
   :config
