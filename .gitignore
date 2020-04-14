@@ -1,10 +1,14 @@
-.mc-lists.el
 .python-environments/
-ac-comphist.dat
 auto-save-list/
 elpa/
 eshell/
 irony/
+transient/
+*.elc
+session.*
+.mc-lists.el
+ac-comphist.dat
 projectile-bookmarks.eld
 smex-items
 tramp
+custom-config.el
