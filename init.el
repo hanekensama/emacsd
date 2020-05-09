@@ -84,30 +84,45 @@
         (error "The buffer has been modified")))
     (bind-key "<f5>" 'revert-buffer-no-confirm))
 
-  (leaf helm
+  (leaf ivy
     :ensure t
     :require t
-  ;  :delight t
+    :delight t
+    :setq
+    (ivy-use-virtual-buffers . t)
+    (enable-recursive-minibuffers . t)
+    (ivy-truncate-lines . nil)
+    (ivy-wrap . t)
+    :bind
+    (:ivy-minibuffer-map
+     ("<escape>" . minibuffer-keyboard-quit))
     :config
-    (leaf helm-smex
-      :ensure t
-      :require t
-      :bind*
-      ("M-x" . helm-smex)
-      ("M-X" . helm-smex-major-mode-commands))
-    (leaf helm-swoop
-      :ensure t
-      :require t
-      :bind*
-      ("C-s" . helm-swoop)
-      ("C-S" . helm-multi-swoop))
-    (leaf helm-tramp
-      :ensure t
-      :require t
-      :defvar include-file)
-    (helm-mode t)
+    (ivy-mode 1))
+
+  (leaf counsel
+    :ensure t
+    :require t
+    :delight t
+    :after ivy
     :bind*
-    ("C-x C-f" . helm-find-files))
+    ("M-x" . counsel-M-x)
+    ("M-y" . counsel-yank-pop)
+    ("C-M-z" . counsel-fzf)
+    ("C-M-r" . counsel-recentf)
+    ("C-x b" . counsel-switch-buffer)
+    ("C-x C-b" . counsel-ibuffer)
+    ("C-M-f" . counsel-ag)
+    :config
+    (counsel-mode 1))
+
+  (leaf swiper
+    :ensure t
+    :require t
+    :setq
+    (swiper-include-line-numer-in-search . t)
+    :bind*
+    ("C-s" . swiper))
+
 
   (leaf *Window間移動
     :smartrep*
@@ -225,7 +240,6 @@
       (ns-use-srgb-colorspace . nil)
       (mode-icons-grayscale-transform . nil)
       :config
-      (spaceline-helm-mode t)
       (spaceline-emacs-theme t)))
   
   (leaf *対応する括弧の強調表示
@@ -279,16 +293,11 @@
     :ensure t
     :delight
     :setq
-    (projectile-completion-system . 'helm)
     (projectile-mode-line . '(:eval (format "PJ[%s]" (projectile-project-name))))
     :config
     (projectile-mode t)
-    (leaf helm-projectile
-      :ensure t
-      :require t
-      :config
-      (helm-projectile-on)))
-
+    )
+  
   (leaf yasnippet
     :ensure t
     :require t
@@ -392,6 +401,8 @@
     (prog-major-mode . lsp-prog-major-mode-enable)
     :config
     (leaf lsp-ui
+      :ensure t
+      :require t
       :custom
       (lsp-ui-doc-enable . t)
       (lsp-ui-doc-header . t)
@@ -431,10 +442,7 @@
       (company-lsp-enable-recompletion . t)
       (company-lsp-enable-snippet . t)
       :init
-      (push 'company-lsp company-backends))
-    (leaf helm-lsp
-      :ensure t
-      :commands helm-lsp-workspace-symbol))
+      (push 'company-lsp company-backends)))
   )
 
 (leaf *モード
@@ -629,11 +637,7 @@
       :ensure t
       :require t
       :after company)
-    (leaf restclient-helm
-      :ensure t
-      :require t
-      :after helm))
-  )
+)  )
 
 (leaf *Webブラウザ
   :config
