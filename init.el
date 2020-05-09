@@ -97,7 +97,12 @@
     (:ivy-minibuffer-map
      ("<escape>" . minibuffer-keyboard-quit))
     :config
-    (ivy-mode 1))
+    (ivy-mode 1)
+    (leaf ivy-rich
+      :ensure t
+      :require t
+      :config
+      (ivy-rich-mode 1)))
 
   (leaf counsel
     :ensure t
@@ -136,7 +141,7 @@
     :config
     (run-with-idle-timer 30 t '(lambda () (with-suppressed-message (recentf-save-list))))
     (leaf recentf-ext :ensure t :require t))
-
+  
   (leaf *Window間移動
     :smartrep*
     ("C-x"
@@ -265,6 +270,8 @@
       (if (version<= "26.0.50" emacs-version)
           (global-display-line-numbers-mode t)
         (global-linum-mode t)))
+
+  (leaf all-the-icons :ensure t :require t)
   )
 
 (leaf *プログラミング支援
@@ -310,6 +317,35 @@
     :config
     (projectile-mode t)
     )
+
+  (leaf neotree
+    :ensure t
+    :after projectile
+    :commands
+    (neotree-show neotree-hide neotree-dir neotree-find)
+    :custom
+    (neo-theme 'nerd2)
+    :bind
+    ("<f9>" . neotree-projectile-toggle)
+    :preface
+    (defun neotree-projectile-toggle ()
+      (interactive)
+      (let ((project-dir
+         (ignore-errors
+         ;;; Pick one: projectile or find-file-in-project
+           (projectile-project-root)
+           ))
+        (file-name (buffer-file-name))
+        (neo-smart-open t))
+    (if (and (fboundp 'neo-global--window-exists-p)
+         (neo-global--window-exists-p))
+        (neotree-hide)
+      (progn
+        (neotree-show)
+        (if project-dir
+        (neotree-dir project-dir))
+        (if file-name
+        (neotree-find file-name)))))))
   
   (leaf yasnippet
     :ensure t
