@@ -22,7 +22,7 @@
       :ensure t
       :require t
       :config
-      (leaf delight
+      (leaf diminish
         :ensure t
         :require t)
       (leaf smartrep
@@ -87,7 +87,7 @@
   (leaf ivy
     :ensure t
     :require t
-    :delight t
+    :diminish t
     :setq
     (ivy-use-virtual-buffers . t)
     (enable-recursive-minibuffers . t)
@@ -107,7 +107,7 @@
   (leaf counsel
     :ensure t
     :require t
-    :delight t
+    :diminish t
     :after ivy
     :bind*
     ("M-x" . counsel-M-x)
@@ -118,6 +118,15 @@
     ("C-M-f" . counsel-ag)
     :config
     (counsel-mode 1))
+
+  (leaf smex
+    :ensure t
+    :require t
+    :diminish t
+    :after ivy
+    :setq
+    (smex-history-length . 35)
+    (smex-completion-method . 'ivy))
 
   (leaf swiper
     :ensure t
@@ -229,6 +238,8 @@
         (set-face-attribute 'default nil :font "Ricty Diminished-14")
       (if (member "Ricty" (font-family-list))
           (set-face-attribute 'default nil :font "Ricty-14"))))
+  
+  (leaf all-the-icons :ensure t :require t)
 
   (leaf doom-themes
     :ensure t
@@ -258,7 +269,7 @@
       (ns-use-srgb-colorspace . nil)
       (mode-icons-grayscale-transform . nil)
       :config
-      (spaceline-emacs-theme t)))
+      (spaceline-emacs-theme )))
   
   (leaf *対応する括弧の強調表示
       :config
@@ -270,8 +281,6 @@
       (if (version<= "26.0.50" emacs-version)
           (global-display-line-numbers-mode t)
         (global-linum-mode t)))
-
-  (leaf all-the-icons :ensure t :require t)
   )
 
 (leaf *プログラミング支援
@@ -288,7 +297,7 @@
   (leaf *ソースコード折りたたみ
     :config
     (bind-key* "C-\\" 'hs-toggle-hiding)
-    (delight 'hs-minor-mode))
+    (diminish 'hs-minor-mode))
 
   (leaf *git
     :config
@@ -305,13 +314,13 @@
     (leaf git-gutter
       :ensure t
       :require t
-      :delight t
+      :diminish t
       :config
       (global-git-gutter-mode t)))
 
   (leaf projectile
     :ensure t
-    :delight
+    :diminish
     :setq
     (projectile-mode-line . '(:eval (format "PJ[%s]" (projectile-project-name))))
     :config
@@ -350,7 +359,7 @@
   (leaf yasnippet
     :ensure t
     :require t
-    :delight yas-minor-mode
+    :diminish yas-minor-mode
     :setq
     (yas-snippet-dirs . '("~/.emacs.d/mysnippets"
                         "~/.emacs.d/yasnippets"))
@@ -373,7 +382,7 @@
   (leaf company
     :ensure t
     :require t
-    :delight t
+    :diminish t
     :after yasnippet
     :defvar
     company-backends company-mode/enable-yas company-search-map
@@ -483,6 +492,7 @@
       (lsp-mode-hook . lsp-ui-mode))
     (leaf company-lsp
       :ensure t
+      :require t
       :after company lsp-mode lsp-ui yasnippet
       :commands company-lsp
       :custom
@@ -491,7 +501,12 @@
       (company-lsp-enable-recompletion . t)
       (company-lsp-enable-snippet . t)
       :init
-      (push 'company-lsp company-backends)))
+      (push 'company-lsp company-backends))
+    (leaf lsp-ivy
+      :ensure t
+      :require t
+      :after lsp-mode ivy-mode))
+  
   )
 
 (leaf *モード
