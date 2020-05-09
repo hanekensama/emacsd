@@ -108,7 +108,6 @@
     ("M-x" . counsel-M-x)
     ("M-y" . counsel-yank-pop)
     ("C-M-z" . counsel-fzf)
-    ("C-M-r" . counsel-recentf)
     ("C-x b" . counsel-switch-buffer)
     ("C-x C-b" . counsel-ibuffer)
     ("C-M-f" . counsel-ag)
@@ -123,6 +122,20 @@
     :bind*
     ("C-s" . swiper))
 
+  (leaf recentf
+    :ensure t
+    :require t
+    :after counsel
+    :setq
+    (recentf-save-file . "~/.emacs.d/.recentf")
+    (recentf-max-saved-items . 200)
+    (recentf-exclude '(".recentf"))
+    (recentf-auto-cleanup . 'never)
+    :bind*
+    ("C-x C-r" . counsel-recentf)
+    :config
+    (run-with-idle-timer 30 t '(lambda () (with-suppressed-message (recentf-save-list))))
+    (leaf recentf-ext :ensure t :require t))
 
   (leaf *Window間移動
     :smartrep*
