@@ -99,13 +99,12 @@
       :ensure t
       :require t
       :bind*
-      ("C-;" . helm-swoop)
-      ("M-C-;" . helm-multi-swoop))
-    (leaf swiper-helm
+      ("C-s" . helm-swoop)
+      ("C-S" . helm-multi-swoop))
+    (leaf helm-tramp
       :ensure t
       :require t
-      :bind*
-      ("C-s" . swiper-helm))
+      :defvar include-file)
     (helm-mode t)
     :bind*
     ("C-x C-f" . helm-find-files))
@@ -124,7 +123,8 @@
     ("M-+" . start-e2wm)
     ("M-_" . stop-e2wm)
     :config
-    (leaf maxframe)
+    (leaf maxframe
+      :ensure t)
     (defun start-e2wm()
       (interactive)
       (maximize-frame)
@@ -259,6 +259,7 @@
   (leaf *git
     :config
     (leaf magit
+      :ensure t
       :require t
       :setq
       (vc-handled-backends . '())
@@ -268,6 +269,7 @@
       ("C-x g" . magit-status))
 
     (leaf git-gutter
+      :ensure t
       :require t
       :delight t
       :config
@@ -282,11 +284,13 @@
     :config
     (projectile-mode t)
     (leaf helm-projectile
+      :ensure t
       :require t
       :config
       (helm-projectile-on)))
 
   (leaf yasnippet
+    :ensure t
     :require t
     :delight yas-minor-mode
     :setq
@@ -309,6 +313,7 @@
     (yas-global-mode t))
 
   (leaf company
+    :ensure t
     :require t
     :delight t
     :after yasnippet
@@ -344,87 +349,92 @@
                     backend
                   (list backend))
                 '(:with company-yasnippet))))
-    (add-to-list 'company-backends 'company-files)
     :setq
     (company-backends . (mapcar #'company/backend-yasnippet company-backends))
     :config
     (global-company-mode t)
+    (add-to-list 'company-backends 'company-files)
     (leaf company-box
+      :ensure t
       :require t
       :hook
       (company-mode . company-box-mode)))
 
   (leaf flycheck
+    :ensure t
     :require t
     :custom
-    (global-flycheck-mode t))
+    (global-flycheck-mode . t))
 
   (leaf lsp-mode
-  :require t
-  :commands lsp
-  :after company
-  :defvar company-backends
-  :custom
-  (lsp-prefer-flymake . nil)
-  (lsp-enable-snippet . t)
-  (lsp-enable-indentation . nil)
-  (lsp-docmuent-sync-method . 'incremental)
-  (lsp-inhibit-message . t)
-  (create-lockfiles . nil)
-  :bind
-  ("C-l" . nil)
-  ("C-l C-l" . lsp)
-  ("C-l d" . lsp-goto-definition)
-  ("C-l f" . lsp-format-buffer)
-  ("C-l h" . lsp-describe-definition)
-  ("C-l l" . lsp-lens-mode)
-  ("C-l r" . lsp-rename)
-  ("C-l <f5>" . lsp-restart-workspace)
-  :config
-  (leaf lsp-ui
+    :ensure t
+    :require t
+    :commands lsp
+    :after company
+    :defvar company-backends
     :custom
-    (lsp-ui-doc-enable . t)
-    (lsp-ui-doc-header . t)
-    (lsp-ui-doc-include-signature . t)
-    (lsp-ui-doc-position . 'doc)
-    (lsp-ui-doc-use-childframe . t)
-    (lsp-ui-doc-max-width . 60)
-    (lsp-ui-doc-max-height . 20)
-    (lsp-ui-doc-use-webkit . t)
-    (lsp-ui-flycheck-enable . t)
-    (lsp-ui-sideline-enable . t)
-    (lsp-ui-sideline-ignore-duplicate . t)
-    (lsp-ui-sideline-show-symbol . t)ppp
-    (lsp-ui-sideline-show-hover . t)
-    (lsp-ui-sideline-show-diagnostics . t)
-    (lsp-ui-sideline-show-code-actions . t)
-    (lsp-ui-imenu-enable . nil)
-    (lsp-ui-imenu-kind-position . 'top)
-    (lsp-ui-peek-enable . t)
-    (lsp-ui-peek-always-show . t)
-    (lsp-ui-peek-peek-height . 30)
-    (lsp-ui-peek-list-width . 30)
-    (lsp-ui-peek-fontify . 'always)
+    (lsp-prefer-flymake . nil)
+    (lsp-enable-snippet . t)
+    (lsp-enable-indentation . nil)
+    (lsp-docmuent-sync-method . 'incremental)
+    (lsp-inhibit-message . t)
+    (create-lockfiles . nil)
     :bind
-    ("C-l s" . lsp-ui-sideline-mode)
-    ("C-l C-d" . lsp-ui-find-definition)
-    ("C-l C-r" . lsp-ui-find-references)
+    ("C-l" . nil)
+    ("C-l C-l" . lsp)
+    ("C-l d" . lsp-goto-definition)
+    ("C-l f" . lsp-format-buffer)
+    ("C-l h" . lsp-describe-definition)
+    ("C-l l" . lsp-lens-mode)
+    ("C-l r" . lsp-rename)
+    ("C-l <f5>" . lsp-restart-workspace)
     :hook
-    (lsp-mode-hook . lsp-ui-mode))
-  (leaf company-lsp
-    :ensure t
-    :after lsp-ui company
-    :commands company-lsp
-    :custom
-    (company-lsp-cache-candidates . nil)
-    (company-lsp-async . t)
-    (company-lsp-enable-recompletion . t)
-    (company-lsp-enable-snippet . t)
-    :init
-    (push 'company-lsp company-backends))
-  (leaf helm-lsp
-    :ensure t
-    :commands helm-lsp-workspace-symbol))
+    (prog-major-mode . lsp-prog-major-mode-enable)
+    :config
+    (leaf lsp-ui
+      :custom
+      (lsp-ui-doc-enable . t)
+      (lsp-ui-doc-header . t)
+      (lsp-ui-doc-include-signature . t)
+      (lsp-ui-doc-position . 'doc)
+      (lsp-ui-doc-use-childframe . t)
+      (lsp-ui-doc-max-width . 60)
+      (lsp-ui-doc-max-height . 20)
+      (lsp-ui-doc-use-webkit . t)
+      (lsp-ui-flycheck-enable . t)
+      (lsp-ui-sideline-enable . t)
+      (lsp-ui-sideline-ignore-duplicate . t)
+      (lsp-ui-sideline-show-symbol . t)ppp
+      (lsp-ui-sideline-show-hover . t)
+      (lsp-ui-sideline-show-diagnostics . t)
+      (lsp-ui-sideline-show-code-actions . t)
+      (lsp-ui-imenu-enable . nil)
+      (lsp-ui-imenu-kind-position . 'top)
+      (lsp-ui-peek-enable . t)
+      (lsp-ui-peek-always-show . t)
+      (lsp-ui-peek-peek-height . 30)
+      (lsp-ui-peek-list-width . 30)
+      (lsp-ui-peek-fontify . 'always)
+      :bind
+      ("C-l s" . lsp-ui-sideline-mode)
+      ("C-l C-d" . lsp-ui-find-definition)
+      ("C-l C-r" . lsp-ui-find-references)
+      :hook
+      (lsp-mode-hook . lsp-ui-mode))
+    (leaf company-lsp
+      :ensure t
+      :after company lsp-mode lsp-ui yasnippet
+      :commands company-lsp
+      :custom
+      (company-lsp-cache-candidates . nil)
+      (company-lsp-async . t)
+      (company-lsp-enable-recompletion . t)
+      (company-lsp-enable-snippet . t)
+      :init
+      (push 'company-lsp company-backends))
+    (leaf helm-lsp
+      :ensure t
+      :commands helm-lsp-workspace-symbol))
   )
 
 (leaf *モード
@@ -436,21 +446,24 @@
     :setq
     (c-default-style . "strustrup")
     (c-auto-newline . t)
+    (electric-pair-mode . t)
     :config
+    (define-auto-insert "\\.cpp$" "cpp-template.cpp")
     (leaf clang-format
       :config
       (defun set-hook-after-save-clang-format ()
         (add-hook 'after-save-hook 'clang-format-buffer t t)))
     (leaf ccls
+      :ensure t
       :after lsp-mode
-      :if
+      :when
       (file-directory-p "/usr/local/bin/ccls")
       :custom
-      (ccls-executable "/usr/local/bin/ccls")
-      (ccls-sem-highlight-method 'font-lock)
-      (ccls-use-default-rainbow-sem-highlight)
+      (ccls-executable . "/usr/local/bin/ccls")
+      (ccls-sem-highlight-method . 'font-lock)
+      (ccls-use-default-rainbow-sem-highlight . t)
       :hook
-      (cc-mode . (lambda  () (require 'ccls) (lsp))))
+      ((c-mode c++-mode objc-mode) . (lambda  () (require 'ccls) (lsp))))
     :hook
     (cc-mode . (lsp company-mode flycheck-mode hs-minor-mode))
     ((c-mode c++-mode) . (set-hook-after-save-clang-format)))
@@ -571,6 +584,11 @@
     "\\.markdown\\'"
     "\\.md\\'")
 
+  (leaf yaml-mode
+    :ensure t
+    :mode
+    "\\.yaml\\'")
+
   (leaf logview
     :ensure t
     :mode
@@ -598,6 +616,23 @@
       :config
       (load-library "sqltrasform"))
     (sql-set-product "postgres"))
+
+  (leaf restclient
+    :ensure t
+    :mode
+    "\\.http\\'"
+    :setq
+    (restclient-log-requeset . t)
+    (restclient-same-buffer-response . t)
+    :config
+    (leaf company-restclient
+      :ensure t
+      :require t
+      :after company)
+    (leaf restclient-helm
+      :ensure t
+      :require t
+      :after helm))
   )
 
 (leaf *Webブラウザ
@@ -684,13 +719,16 @@
 
 (leaf *外部設定ファイルの読み込み
   :config
+  (setq external-conf-directory "~/.emacs.d/conf")
   (leaf init-loader
     :ensure t
+    :when
+    (file-directory-p external-conf-directory)
     :defvar
     init-loader-show-log-after-init
     :setq
     (init-loader-show-log-after-init . 'error-only)
     :config
-    (init-loader-load "~/.emacs.d/conf"))
+    (init-loader-load external-conf-directory))
   )
 
