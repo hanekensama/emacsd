@@ -150,6 +150,10 @@
     :config
     (run-with-idle-timer 30 t '(lambda () (with-suppressed-message (recentf-save-list))))
     (leaf recentf-ext :ensure t :require t))
+
+  (leaf hydra
+    :ensure t
+    :require t)
   
   (leaf *Window間移動
     :smartrep*
@@ -390,10 +394,8 @@
     (company-transformers . '(company-sort-by-backend-importance))
     (company-idle-delay . 0.1)
     (company-echo-delay . 0.1)
-    (company-minimum-prefix-length . 2)
     (company-selection-wrap-around . t)
     (completion-ignore-case . t)
-    (company-mode/enable-yas . t)
     :bind*
     ("C-j" . company-complete)
     :bind
@@ -402,7 +404,7 @@
      ("C-p" . company-select-previous)
      ("C-s" . company-filter-candidates)
      ("C-f" . company-complete-selection)
-     ("<tab>" . company-complete-selection))
+     ("<tab>" . company-indent-or-complete-common))
     (:company-search-map
      ("C-n" . company-select-next)
      ("C-p" . company-select-previous))
@@ -417,10 +419,11 @@
                   (list backend))
                 '(:with company-yasnippet))))
     :setq
-    (company-backends . (mapcar #'company/backend-yasnippet company-backends))
+    (company-mode/enable-yas . t)
     :config
-    (global-company-mode t)
-    (add-to-list 'company-backends 'company-files)
+    (global-company-mode)
+    (push 'company/backend-yasnipet company-backends)
+    (push 'company-files company-backends)
     (leaf company-box
       :ensure t
       :require t
@@ -493,7 +496,7 @@
     (leaf company-lsp
       :ensure t
       :require t
-      :after company lsp-mode lsp-ui yasnippet
+      :after company lsp-mode lsp-ui
       :commands company-lsp
       :custom
       (company-lsp-cache-candidates . nil)
@@ -505,9 +508,7 @@
     (leaf lsp-ivy
       :ensure t
       :require t
-      :after lsp-mode ivy-mode))
-  
-  )
+      :after lsp-mode ivy-mode)))
 
 (leaf *モード
   :config
@@ -549,6 +550,13 @@
       (leaf racer)
       :hook
       (rustic-mode . (lsp company-mode flycheck-mode hs-minor-mode))))
+
+  (leaf go-mode
+    :ensure t
+    :mode
+    ("\\.go\\'" . go-mode)
+    :hook
+    (go-mode . (lsp-go-install-save-hooks lsp company-mode flycheck-mode hs-minor-mode)))
 
   (leaf emacs-lisp-mode
     :setq
@@ -602,6 +610,11 @@
       :after lsp cc-mode)
     :hook
     (java-mode . (lsp company-mode flycheck-mode hs-minor-mode)))
+
+  (leaf fish-mode
+    :ensure t
+    :mode
+    "\\.fish\\'")
 
   (leaf org
     :ensure t
@@ -665,6 +678,25 @@
     :ensure t
     :mode
     "\\.log\\'")
+
+  (leaf docker
+    :ensure t
+    :require t)
+
+  (leaf docker-tramp
+    :ensure t
+    :require t)
+
+  (leaf dockerfile-mode
+    :ensure t
+    :mode
+    "\\Dockerfile\\'"
+    "\\dockerfile\\'")
+  
+  (leaf docker-compose-mode
+    :ensure t
+    :mode
+    ("\\docker-compose.yaml'"))
 
   (leaf sql
     :ensure t
